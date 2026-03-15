@@ -19,7 +19,7 @@ import google.generativeai as genai
 # ---------------------------------------------------------------------------
 FOLDER_PATH    = r"Splits"    # ← input folder containing the .txt files to process
 OUTPUT_FOLDER  = r"Hybrid Output (AI & Regex)"  # ← output folder for the generated JSON files
-GEMINI_API_KEY = "AIzaSyDIml-i3L4Lzag5dyB_UgyP__m8Hhy7GpY"             # ← Gemini API Key
+GEMINI_API_KEY = "//"             # ← Gemini API Key
 # ---------------------------------------------------------------------------
 
 
