@@ -198,9 +198,3 @@ Each processed document produces two JSON files:
   ```
 - Docling OCR can be slow on large PDFs without a GPU. Set `use_gpu=True` in `doclingg.py` if a CUDA GPU is available.
 - `pymupdff.py` will warn if a PDF has no native text layer (image-only PDFs need Docling instead).
-
----
-
-## 📄 License
-
-MIT
