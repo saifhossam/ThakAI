@@ -1,6 +1,6 @@
 # 📜 Arabic Legal Document Processing Pipeline
 
-A modular, end-to-end pipeline for extracting, splitting, profiling, and structuring Arabic legal documents (UAE laws) from PDFs or web sources into structured JSON outputs.
+A modular, end-to-end pipeline for extracting, splitting, profiling, and structuring Arabic legal documents (UAE laws) from PDFs or web sources into structured JSON — with a RAG-powered question answering interface.
 
 ---
 
@@ -25,7 +25,10 @@ PDFs / Web
     └── hybrid.py         (Regex + Gemini AI — fills metadata gaps)
     │
     ▼
-Structured JSON outputs (metadata + structure)
+[5] RAG Interface         ──► app.py + rag.py  (Streamlit + FAISS + Gemini)
+    │
+    ▼
+Structured JSON outputs + Grounded Arabic Q&A
 ```
 
 ---
@@ -47,7 +50,9 @@ Structured JSON outputs (metadata + structure)
 ├── scrap.py                     # Web scraper for uaelegislation.gov.ae
 ├── split.py                     # Splits cleaned text into logical pages
 ├── regexx.py                    # Regex-only document profiler
-└── hybrid.py                    # Hybrid profiler (Regex + Gemini AI)
+├── hybrid.py                    # Hybrid profiler (Regex + Gemini AI)
+├── rag.py                       # RAG backend (embeddings, FAISS, retrieval, generation)
+└── app.py                       # Streamlit frontend
 ```
 
 ---
@@ -62,7 +67,8 @@ Structured JSON outputs (metadata + structure)
 ### Install Dependencies
 
 ```bash
-pip install pymupdf docling crawl4ai beautifulsoup4 google-generativeai
+pip install pymupdf docling crawl4ai beautifulsoup4 google-generativeai \
+            streamlit faiss-cpu sentence-transformers numpy
 ```
 
 For `crawl4ai` browser support:
@@ -111,7 +117,7 @@ python scrap.py
 python split.py
 ```
 
-> Reads `.txt` files from `Clean_Text/`, splits them at structural markers (الباب / الفصل / المادة), and saves paged `.txt` files + metadata `.json` to `Splits/`
+> Reads `.txt` files from `Clean_Text/`, splits them at structural markers (الباب / الفصل / المادة), and saves paged `.txt` + metadata `.json` to `Splits/`
 
 ---
 
@@ -135,6 +141,79 @@ python regexx.py
    ```
 
 > Both profilers read from `Splits/` and output `*_metadata.json` + `*_structure.json` per document.
+
+---
+
+### Step 5 — RAG Question Answering Interface
+
+```bash
+streamlit run app.py
+```
+
+Upload any page-structured `.txt` file from `Splits/`, type your question in Arabic, and get a grounded answer.
+
+---
+
+## 🤖 RAG Interface
+
+The RAG system lets you query any processed legal document with natural language Arabic questions. It embeds the document pages into a FAISS vector index and uses Gemini to generate grounded answers from the most relevant retrieved pages.
+
+![Arabic RAG Assistant Demo](rag_demo.png)
+
+*Example: querying المادة الثالثة من الفصل الثاني — the system retrieves the correct page and generates an accurate Arabic answer with a page reference.*
+
+### How it works
+
+```
+User Question
+     │
+     ▼
+[Embedding]  query: <question>  →  BGE vector
+     │
+     ▼
+[FAISS Search]  top-k most similar page chunks
+     │
+     ▼
+[Gemini Prompt]  context (retrieved pages) + question
+     │
+     ▼
+Grounded Arabic Answer
+```
+
+### Components
+
+| File | Role |
+|---|---|
+| `rag.py` | Chunking, FAISS indexing, retrieval, Gemini generation |
+| `app.py` | Streamlit UI — file upload, question input, answer display |
+
+---
+
+## 💡 Model Recommendations for Arabic Documents
+
+The models currently used (`BAAI/bge-base-en-v1.5` for embeddings, `gemini-2.5-flash` for generation) are **free and readily available**, making them a solid practical starting point. For better Arabic-specific performance, here are the best free alternatives:
+
+### Embedding Models
+
+| Model | Source | Why better for Arabic |
+|---|---|---|
+| ✅ `BAAI/bge-base-en-v1.5` *(current)* | HuggingFace | Good baseline — but English-first |
+| ⭐ `intfloat/multilingual-e5-large` | HuggingFace (free) | Trained on 100+ languages incl. Arabic; best free multilingual retrieval quality |
+| ⭐ `sentence-transformers/paraphrase-multilingual-mpnet-base-v2` | HuggingFace (free) | Solid multilingual coverage, lighter than e5-large, good for low-resource setups |
+| ⭐ `aubmindlab/bert-base-arabertv02` | HuggingFace (free) | Arabic-native BERT — excellent for formal Modern Standard Arabic and legal text |
+
+> **Recommendation:** Swap `BAAI/bge-base-en-v1.5` for `intfloat/multilingual-e5-large` in `rag.py` for the best free Arabic retrieval. It's a one-line change — just replace the model name string.
+
+### Generation (LLM) Models
+
+| Model | Source | Why better for Arabic |
+|---|---|---|
+| ✅ `gemini-2.5-flash` *(current)* | Google (free tier) | Fast, multilingual, good Arabic comprehension |
+| ⭐ `gemini-1.5-pro` | Google (free tier) | Stronger reasoning + longer context window — better for complex legal questions |
+| ⭐ `command-r` | Cohere (free tier) | Purpose-built for RAG workflows; strong Arabic support |
+| ⭐ `mistralai/Mistral-7B-Instruct-v0.3` | HuggingFace / Ollama (free) | Open-weight, runs fully locally, decent Arabic — good for air-gapped setups |
+
+> **Recommendation:** `gemini-2.5-flash` is a great free default for Arabic legal text. Upgrade to `gemini-1.5-pro` if you need deeper reasoning on long documents or multi-article questions.
 
 ---
 
@@ -179,22 +258,31 @@ Each processed document produces two JSON files:
 
 ---
 
-## 🤖 Hybrid Profiling Strategy
+## 🔐 API Keys
 
-`hybrid.py` uses a two-layer approach for maximum accuracy:
+Keep API keys out of version control. Use environment variables instead of hardcoding:
 
-- **Layer 1 (Regex):** Deterministic extraction of structure, law numbers, dates, and document types using compiled regular expressions.
-- **Layer 2 (Gemini AI):** Fills in fields that regex cannot reliably extract (title, formatted law number, document type) and optionally corrects structural counts.
-- **Layer 3 (Merge):** AI corrections are applied on top of regex results, with each field tagged by its extraction method (`ai` / `regex` / `regex+ai_corrected`).
+```python
+import os
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+```
+
+Add a `.env` file locally and load it with `python-dotenv`, or export in your shell:
+
+```bash
+export GEMINI_API_KEY="your-key-here"
+```
 
 ---
 
 ## ⚠️ Notes
 
-- The Gemini API key in `hybrid.py` should be replaced with your own key and kept out of version control. Consider using environment variables:
-  ```python
-  import os
-  GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
-  ```
 - Docling OCR can be slow on large PDFs without a GPU. Set `use_gpu=True` in `doclingg.py` if a CUDA GPU is available.
-- `pymupdff.py` will warn if a PDF has no native text layer (image-only PDFs need Docling instead).
+- `pymupdff.py` will warn if a PDF has no native text layer — use Docling instead for those.
+- The RAG interface expects `.txt` files with `=== صفحة X ===` page markers produced by `split.py`.
+
+---
+
+## 📄 License
+
+MIT
