@@ -1,0 +1,55 @@
+{
+  "document_id": "e682edb9-2dda-484c-9dc8-e099ac5cdbfb",
+  "filename": "uae_law_1_cleaned.txt",
+  "total_nodes": 401,
+  "parts_extracted": 12,
+  "chapters_extracted": 23,
+  "articles_extracted": 366,
+  "top_level_type": "Part",
+  "has_preamble": true,
+  "pages": {
+    "has_preamble_page": true,
+    "total_pages": 100,
+    "page_markers_found": 101
+  },
+  "structural_vocabulary": [
+    {
+      "division_type": "الباب",
+      "level": 1,
+      "numbering_style": "arabic_ordinal",
+      "pattern_description": "الباب followed by Arabic ordinal",
+      "regex": "^الباب\\s+[\\u0600-\\u06ff]+",
+      "example": "الباب الأول",
+      "estimated_count": 12
+    },
+    {
+      "division_type": "الفصل",
+      "level": 2,
+      "numbering_style": "arabic_ordinal",
+      "pattern_description": "الفصل followed by Arabic ordinal",
+      "regex": "^الفصل\\s+[\\u0600-\\u06ff]+",
+      "example": "الفصل الأول",
+      "estimated_count": 23
+    },
+    {
+      "division_type": "المادة",
+      "level": 3,
+      "numbering_style": "numeric_parenthesised",
+      "pattern_description": "المادة followed by integer in parentheses",
+      "regex": "^المادة\\s*\\(\\d+\\)",
+      "example": "المادة (1)",
+      "estimated_count": 366
+    }
+  ],
+  "hierarchy": [
+    "الباب",
+    "الفصل",
+    "المادة"
+  ],
+  "hierarchy_english": [
+    "Part",
+    "Chapter",
+    "Article"
+  ],
+  "message": "structure extracted"
+}

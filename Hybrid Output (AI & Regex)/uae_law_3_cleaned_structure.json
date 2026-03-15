@@ -1,0 +1,33 @@
+{
+  "document_id": "ccbae476-fa7e-4b93-8a98-904a5e59355c",
+  "filename": "uae_law_3_cleaned.txt",
+  "total_nodes": 18,
+  "parts_extracted": 0,
+  "chapters_extracted": 0,
+  "articles_extracted": 18,
+  "top_level_type": "Article",
+  "has_preamble": false,
+  "pages": {
+    "has_preamble_page": false,
+    "total_pages": 9,
+    "page_markers_found": 9
+  },
+  "structural_vocabulary": [
+    {
+      "division_type": "المادة",
+      "level": 1,
+      "numbering_style": "numeric_parenthesised",
+      "pattern_description": "المادة followed by integer in parentheses",
+      "regex": "^المادة\\s*\\(\\d+\\)",
+      "example": "المادة (1)",
+      "estimated_count": 18
+    }
+  ],
+  "hierarchy": [
+    "المادة"
+  ],
+  "hierarchy_english": [
+    "Article"
+  ],
+  "message": "structure extracted"
+}

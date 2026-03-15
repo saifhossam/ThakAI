@@ -1,0 +1,44 @@
+{
+  "document_id": "1df4c6bb-c1ed-4ec9-9fee-89135d912bda",
+  "filename": "uae_law_2_cleaned.txt",
+  "total_nodes": 27,
+  "parts_extracted": 0,
+  "chapters_extracted": 7,
+  "articles_extracted": 20,
+  "top_level_type": "Chapter",
+  "has_preamble": false,
+  "pages": {
+    "has_preamble_page": false,
+    "total_pages": 6,
+    "page_markers_found": 6
+  },
+  "structural_vocabulary": [
+    {
+      "division_type": "الفصل",
+      "level": 1,
+      "numbering_style": "arabic_ordinal",
+      "pattern_description": "الفصل followed by Arabic ordinal",
+      "regex": "^الفصل\\s+[\\u0600-\\u06ff]+",
+      "example": "الفصل الأول",
+      "estimated_count": 7
+    },
+    {
+      "division_type": "المادة",
+      "level": 2,
+      "numbering_style": "numeric_parenthesised",
+      "pattern_description": "المادة followed by integer in parentheses",
+      "regex": "^المادة\\s*\\(\\d+\\)",
+      "example": "المادة (1)",
+      "estimated_count": 20
+    }
+  ],
+  "hierarchy": [
+    "الفصل",
+    "المادة"
+  ],
+  "hierarchy_english": [
+    "Chapter",
+    "Article"
+  ],
+  "message": "structure extracted"
+}

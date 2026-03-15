@@ -1,0 +1,19 @@
+{
+  "document_id": "ccbae476-fa7e-4b93-8a98-904a5e59355c",
+  "filename": "uae_law_3_cleaned.txt",
+  "title": "Not specified",
+  "law_number": "Not specified",
+  "document_type": "Decision",
+  "jurisdiction": "UAE",
+  "language": "Arabic",
+  "effective_date": "Not specified",
+  "status": "in_force",
+  "extraction_method": {
+    "law_number": "ai",
+    "document_type": "ai",
+    "effective_date": "ai",
+    "title": "ai",
+    "structure": "regex+ai_corrected"
+  },
+  "message": "profiled"
+}

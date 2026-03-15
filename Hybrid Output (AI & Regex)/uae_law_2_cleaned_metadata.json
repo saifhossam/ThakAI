@@ -1,0 +1,19 @@
+{
+  "document_id": "1df4c6bb-c1ed-4ec9-9fee-89135d912bda",
+  "filename": "uae_law_2_cleaned.txt",
+  "title": null,
+  "law_number": "القانون الاتحادي رقم (6) لسنة 1983",
+  "document_type": "Federal Law",
+  "jurisdiction": "UAE",
+  "language": "Arabic",
+  "effective_date": "1983-01-01",
+  "status": "in_force",
+  "extraction_method": {
+    "law_number": "regex",
+    "document_type": "ai",
+    "effective_date": "regex",
+    "title": "ai",
+    "structure": "regex+ai_corrected"
+  },
+  "message": "profiled"
+}

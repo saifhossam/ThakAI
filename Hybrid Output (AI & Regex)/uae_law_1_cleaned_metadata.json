@@ -1,0 +1,19 @@
+{
+  "document_id": "e682edb9-2dda-484c-9dc8-e099ac5cdbfb",
+  "filename": "uae_law_1_cleaned.txt",
+  "title": "بشأن الشركات التجارية",
+  "law_number": "القانون الاتحادي رقم (1) لسنة 1972",
+  "document_type": "Decree-Law",
+  "jurisdiction": "UAE",
+  "language": "Arabic",
+  "effective_date": "1972-01-01",
+  "status": "in_force",
+  "extraction_method": {
+    "law_number": "regex",
+    "document_type": "ai",
+    "effective_date": "regex",
+    "title": "ai",
+    "structure": "regex+ai_corrected"
+  },
+  "message": "profiled"
+}
