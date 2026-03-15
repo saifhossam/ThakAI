@@ -198,22 +198,18 @@ The models currently used (`BAAI/bge-base-en-v1.5` for embeddings, `gemini-2.5-f
 | Model | Source | Why better for Arabic |
 |---|---|---|
 | ✅ `BAAI/bge-base-en-v1.5` *(current)* | HuggingFace | Good baseline — but English-first |
-| ⭐ `intfloat/multilingual-e5-large` | HuggingFace (free) | Trained on 100+ languages incl. Arabic; best free multilingual retrieval quality |
-| ⭐ `sentence-transformers/paraphrase-multilingual-mpnet-base-v2` | HuggingFace (free) | Solid multilingual coverage, lighter than e5-large, good for low-resource setups |
-| ⭐ `aubmindlab/bert-base-arabertv02` | HuggingFace (free) | Arabic-native BERT — excellent for formal Modern Standard Arabic and legal text |
+| ⭐ `text-embedding-3-large` | Openai | most powerful and versatile embedding model, offering high-dimensional semantic representation and superior multilingual performance—particularly for complex languages like Arabic |
 
-> **Recommendation:** Swap `BAAI/bge-base-en-v1.5` for `intfloat/multilingual-e5-large` in `rag.py` for the best free Arabic retrieval. It's a one-line change — just replace the model name string.
+> **Recommendation:** Swap `BAAI/bge-base-en-v1.5` for `text-embedding-3-large` in `rag.py` for the best free Arabic retrieval. It's a one-line change — just replace the model name string.
 
 ### Generation (LLM) Models
 
 | Model | Source | Why better for Arabic |
 |---|---|---|
 | ✅ `gemini-2.5-flash` *(current)* | Google (free tier) | Fast, multilingual, good Arabic comprehension |
-| ⭐ `gemini-1.5-pro` | Google (free tier) | Stronger reasoning + longer context window — better for complex legal questions |
-| ⭐ `command-r` | Cohere (free tier) | Purpose-built for RAG workflows; strong Arabic support |
-| ⭐ `mistralai/Mistral-7B-Instruct-v0.3` | HuggingFace / Ollama (free) | Open-weight, runs fully locally, decent Arabic — good for air-gapped setups |
+| ⭐ `GPT-4o` | Openai | Serves as the high-performance synthesis engine that leverages an optimized Arabic tokenizer to "read" retrieved context more efficiently and "generate" linguistically nuanced, grounded responses across both Modern Standard Arabic and regional dialects. |
 
-> **Recommendation:** `gemini-2.5-flash` is a great free default for Arabic legal text. Upgrade to `gemini-1.5-pro` if you need deeper reasoning on long documents or multi-article questions.
+> **Recommendation:** `gemini-2.5-flash` is a great free default for Arabic legal text. Upgrade to `GPT-4o` if you need deeper reasoning on long documents or multi-article questions.
 
 ---
 
