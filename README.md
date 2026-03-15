@@ -199,7 +199,7 @@ The models currently used (`BAAI/bge-base-en-v1.5` for embeddings, `gemini-2.5-f
 |---|---|---|
 | ✅ `BAAI/bge-base-en-v1.5` *(current)* | HuggingFace | Good baseline — but English-first |
 | ⭐ `text-embedding-3-large` | Openai | most powerful and versatile embedding model, offering high-dimensional semantic representation and superior multilingual performance—particularly for complex languages like Arabic |
-| ⭐ `Claude 3.5 Sonnet` | Amazon Bedrock | Excellent long-context reasoning and document analysis, well suited for legal RAG systems |
+| ⭐ `Cohere Embed v4` | Amazon Bedrock | Enterprise-grade multilingual embeddings with strong performance across complex Arabic and other languages |
 
 > **Recommendation:** Swap `BAAI/bge-base-en-v1.5` for `text-embedding-3-large` in `rag.py` for the best free Arabic retrieval. It's a one-line change — just replace the model name string.
 
@@ -209,6 +209,7 @@ The models currently used (`BAAI/bge-base-en-v1.5` for embeddings, `gemini-2.5-f
 |---|---|---|
 | ✅ `gemini-2.5-flash` *(current)* | Google (free tier) | Fast, multilingual, good Arabic comprehension |
 | ⭐ `GPT-4o` | Openai | Serves as the high-performance synthesis engine that leverages an optimized Arabic tokenizer to "read" retrieved context more efficiently and "generate" linguistically nuanced, grounded responses across both Modern Standard Arabic and regional dialects. |
+| ⭐ `Claude 3.5 Sonnet` | Amazon Bedrock | Excellent long-context reasoning and document analysis, well suited for legal RAG systems |
 
 > **Recommendation:** `gemini-2.5-flash` is a great free default for Arabic legal text. Upgrade to `GPT-4o` if you need deeper reasoning on long documents or multi-article questions.
 
