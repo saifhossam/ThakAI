@@ -199,6 +199,7 @@ The models currently used (`BAAI/bge-base-en-v1.5` for embeddings, `gemini-2.5-f
 |---|---|---|
 | ✅ `BAAI/bge-base-en-v1.5` *(current)* | HuggingFace | Good baseline — but English-first |
 | ⭐ `text-embedding-3-large` | Openai | most powerful and versatile embedding model, offering high-dimensional semantic representation and superior multilingual performance—particularly for complex languages like Arabic |
+| ✅ `Claude 3.5 Sonnet` | Amazon Bedrock | Excellent long-context reasoning and document analysis, well suited for legal RAG systems |
 
 > **Recommendation:** Swap `BAAI/bge-base-en-v1.5` for `text-embedding-3-large` in `rag.py` for the best free Arabic retrieval. It's a one-line change — just replace the model name string.
 
