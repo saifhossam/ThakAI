@@ -21,17 +21,17 @@ async def fetch_and_save(crawler, url, idx):
         print(f"No content found for {url}")
         return
 
-    # حذف العناصر غير النصية
+    # decompose unwanted tags
     for tag in law_content.find_all(["img", "svg", "a", "button", "script", "style"]):
         tag.decompose()
 
-    # تحويل <br> لسطر جديد
+    # convert <br> to newlines
     for br in law_content.find_all("br"):
         br.replace_with("\n")
 
     text = law_content.get_text("\n", strip=True)
 
-    # حفظ الملف جوه فولدر txt
+    # save the cleaned text to a file
     file_name = os.path.join(folder, f"uae_law_{idx+1}_cleaned.txt")
     with open(file_name, "w", encoding="utf-8") as f:
         f.write(text)
