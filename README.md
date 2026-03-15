@@ -271,6 +271,7 @@ export GEMINI_API_KEY="your-key-here"
 
 ## ⚠️ Notes
 
+- PyMuPDF and Docling were ineffective for text extraction since the PDFs appear to use encoded text, resulting in unreadable output and     preventing reliable preprocessing or text normalization.
 - Docling OCR can be slow on large PDFs without a GPU. Set `use_gpu=True` in `doclingg.py` if a CUDA GPU is available.
 - `pymupdff.py` will warn if a PDF has no native text layer — use Docling instead for those.
 - The RAG interface expects `.txt` files with `=== صفحة X ===` page markers produced by `split.py`.
