@@ -13,7 +13,7 @@ import streamlit as st
 # ----------------------------
 # Static API Key
 # ----------------------------
-GEMINI_API_KEY = "AIzaSyCg_L7VGh8-6w5a0PhTC1O4zwiagTbyE0g"
+GEMINI_API_KEY = "//"
 
 
 # ----------------------------
